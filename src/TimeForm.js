@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Chart from 'chart.js';
+import './TimeForm.css';
 
 function TimeForm(){
-  const [form, setForm] = useState({start:'2013-09-01', end:'2019-11-01', invest:'50' , interval:'weekly'});
+  const [form, setForm] = useState(null);
   
   function updateState(e){
     e.preventDefault();
@@ -11,20 +12,20 @@ function TimeForm(){
     let invest = e.target.invest.value;
     let interval = e.target.interval.value;
     
-    setForm({start:start, end:end, invest:invest , interval:interval});
-
-    getAPIData();
+    setForm({start:start, end:end, invest:invest , interval:interval})
+      
+    getAPIData(start, end, interval, invest);
   }
 
-  function calculateInterval(dailyLogs){
-    if(form.interval === 'weekly'){
+  function calculateInterval(dailyLogs, interval){
+    if(interval === 'weekly'){
       return dailyLogs.filter((log, i) => i % 7 === 0);
-    } else if(form.interval === 'monthly'){
+    } else if(interval === 'monthly'){
       let startDay = dailyLogs[0][0].charAt(8) + dailyLogs[0][0].charAt(9);
       return dailyLogs.filter(log => {
         return log[0].charAt(8) + log[0].charAt(9) === startDay;
       })
-    } else if(form.interval === 'yearly'){
+    } else if(interval === 'yearly'){
       let yearlyArray = [];
       return dailyLogs.filter(log => {
         if(!yearlyArray.includes(log[0].charAt(2)+log[0].charAt(3))){
@@ -37,8 +38,8 @@ function TimeForm(){
     }
   }
 
-  function getAPIData(){
-    let url = `https://api.coindesk.com/v1/bpi/historical/close.json?start=${form.start}&end=${form.end}`;
+  function getAPIData(start, end, interval, invest){
+    let url = `https://api.coindesk.com/v1/bpi/historical/close.json?start=${start}&end=${end}`;
 
     fetch(url)
       .then(res => res.json())
@@ -48,10 +49,10 @@ function TimeForm(){
           let dailyLogs = Object.entries(result.bpi);
 
           // reduces the array based on the time period the user entered
-          let logs = calculateInterval(dailyLogs);
+          let logs = calculateInterval(dailyLogs, interval);
 
           // shapes the data into an object {date:['2018-11-01'..], price:[22...], shares:[1, 2, 3...]}
-          let graphArray = calculateGraphArray(logs);
+          let graphArray = calculateGraphArray(logs, invest);
           
           generateChart(graphArray);
         },
@@ -61,7 +62,7 @@ function TimeForm(){
       )
   }
 
-  function calculateGraphArray(arr){
+  function calculateGraphArray(arr, invest){
     let data = {date:[], price:[], shares:[], invenstment:[]};
 
     // populate the date and price from the API
@@ -73,7 +74,7 @@ function TimeForm(){
     // populate the number of shares owned based off of the amounted invested
     let temp = 0;
     data.price.forEach(price => {
-      temp += form.invest/price;
+      temp += invest/price;
       data.shares.push(temp);
     })
     

@@ -1,0 +1,7 @@
+input, label, button, select{
+  display: block;
+  margin:auto;
+  margin-top: .5em;
+  padding: .5em;
+  text-align: center;
+}

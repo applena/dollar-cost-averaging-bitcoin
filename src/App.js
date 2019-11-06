@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-       <h1>proof of life</h1>
+       <h1>Dollar Cost Avergering Investing in Bitcoin</h1>
       </header>
       <TimeForm></TimeForm>
       <Chart></Chart>
