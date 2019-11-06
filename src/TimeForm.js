@@ -131,7 +131,7 @@ function TimeForm(){
         ></input>
       </label>
 
-      <label> An Amount To Regularily Invest
+      <label> An Amount To Regularly Invest
         <input  
           name="invest"
           placeholder="50"
