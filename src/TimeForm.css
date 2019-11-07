@@ -5,3 +5,10 @@ input, label, button, select{
   padding: .5em;
   text-align: center;
 }
+
+#summary{
+  border: 2px solid black;
+  width: 25%;
+  float: right;
+  margin-right: 20px;
+}

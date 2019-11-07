@@ -1,5 +1,5 @@
 function calculateGraphArray(arr, invest){
-  let data = {date:[], price:[], shares:[], invenstment:[], principal:[]};
+  let data = {date:[], price:[], shares:[], investment:[], principal:[]};
 
   // populate the date and price from the API
   let temp=0;
@@ -19,7 +19,7 @@ function calculateGraphArray(arr, invest){
   
   // populates the investment based off of # of shares owned
   data.shares.forEach((share, i) => {
-    data.invenstment.push(share*data.price[i]);
+    data.investment.push(share*data.price[i]);
   })
 
   return data;

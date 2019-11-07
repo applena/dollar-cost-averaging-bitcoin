@@ -5,7 +5,7 @@ import calculateGraphArray from './calculateGraphArray.js';
 function getAPIData(start, end, interval, invest){
   let url = `https://api.coindesk.com/v1/bpi/historical/close.json?start=${start}&end=${end}`;
 
-  fetch(url)
+  return fetch(url)
     .then(res => res.json())
     .then(
       (result) => {
@@ -19,6 +19,7 @@ function getAPIData(start, end, interval, invest){
         let graphArray = calculateGraphArray(logs, invest);
         
         generateChart(graphArray);
+        return graphArray;
       },
       (error) => {
         console.log(error)

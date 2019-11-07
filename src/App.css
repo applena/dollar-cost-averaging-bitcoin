@@ -27,5 +27,6 @@ form{
 canvas{
   width: 70% !important;
   height: 70% !important;
-  margin: auto !important;
+  float: left !important;
+  margin-left: 20px !important;
 }
