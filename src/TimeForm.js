@@ -47,6 +47,7 @@ function TimeForm(){
           <input  
             name="startDate"
             type="date"
+            defaultValue="2018-01-01"
             required>
           </input>
         </label>
@@ -55,6 +56,7 @@ function TimeForm(){
         <input  
             name="endDate"
             type="date"
+            defaultValue="2019-11-01"
             required>
           </input>
         </label>
